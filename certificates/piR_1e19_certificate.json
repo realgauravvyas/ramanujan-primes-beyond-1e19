@@ -1,0 +1,15 @@
+{
+ "n": 19,
+ "Q": 10000000000000000000,
+ "pi_Q": 234057667276344607,
+ "pi_halfQ": 118959989688273472,
+ "f_at_Q": 115097677588071135,
+ "count": 115097677588071134,
+ "min_offset": "unknown (recompute script didn't capture it)",
+ "walk_dip": -1,
+ "grid_points": 17,
+ "seconds": 678.0,
+ "time_human": "11m18s",
+ "anchors_cross_verified": false,
+ "verification_status": "prior self-computed; not OEIS-published"
+}

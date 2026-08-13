@@ -1,0 +1,15 @@
+{
+ "n": 12,
+ "Q": 1000000000000,
+ "pi_Q": 37607912018,
+ "pi_halfQ": 19308136142,
+ "f_at_Q": 18299775876,
+ "count": 18299775876,
+ "min_offset": 0,
+ "walk_dip": 0,
+ "grid_points": 1,
+ "seconds": 0.41,
+ "time_human": "0.41s",
+ "anchors_cross_verified": false,
+ "verification_status": "OEIS A181671 published"
+}

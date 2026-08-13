@@ -1,0 +1,23 @@
+n,a_n,seconds,time_human,checkpoints,verification_status
+1,1,0.64,0.64s,0,OEIS A181671 published
+2,10,0.38,0.38s,0,OEIS A181671 published
+3,72,0.38,0.38s,0,OEIS A181671 published
+4,559,0.38,0.38s,0,OEIS A181671 published
+5,4459,0.38,0.38s,0,OEIS A181671 published
+6,36960,0.37,0.37s,0,OEIS A181671 published
+7,316066,0.36,0.36s,0,OEIS A181671 published
+8,2760321,0.36,0.36s,0,OEIS A181671 published
+9,24491666,0.35,0.35s,0,OEIS A181671 published
+10,220098288,0.34,0.34s,0,OEIS A181671 published
+11,1998400235,0.35,0.35s,0,OEIS A181671 published
+12,18299775876,0.41,0.41s,1,OEIS A181671 published
+13,168773875190,0.59,0.59s,3,OEIS A181671 published
+14,1566017986235,1.40,1.40s,6,OEIS A181671 published
+15,14606736768049,4.41,4.41s,8,OEIS A181671 published
+16,136860923837558,16.57,16.57s,10,OEIS A181671 published
+17,1287462389890262,91.81,91.81s,13,OEIS A181671 published
+18,12153997721169239,343.37,5m43s,15,prior self-computed; not OEIS-published
+19,115097677588071134,678,11m18s,17,prior self-computed; not OEIS-published
+20,1093039678770734297,3839,63m59s,16,NEW - cross-algorithm (Gourdon+Deleglise-Rivat) verified
+21,10406559368229726028,16307.3,4h31m47s,18,NEW - cross-algorithm + independent Miller-Rabin walk verification; clean single-pass fresh recompute
+22,99306360875818676888,53002.1,14h43m22s,12,NEW - cross-algorithm verified; clean single-pass fresh recompute
