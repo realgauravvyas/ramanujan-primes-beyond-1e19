@@ -59,8 +59,8 @@ Full table, methodology, and every verification layer: **[`paper/main.pdf`](pape
 ### 🧭 How it works
 
 Sieving directly to certify $a(k)$ at $Q=10^{20}$ and beyond is infeasible — the
-certification window alone spans ~$10^{12}$ integers, entirely above the $2^{64}$
-limit of general-purpose sieve libraries. Instead:
+certification window alone spans roughly $10^{12}$ integers, entirely above the
+$2^{64}$ limit of general-purpose sieve libraries. Instead:
 
 1. **Bracketing lemma** — exact $\pi(x)$ at $O(\log)$ grid endpoints
    (via [`primecount`](https://github.com/kimwalisch/primecount)) lower-bounds
