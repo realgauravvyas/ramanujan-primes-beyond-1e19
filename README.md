@@ -116,7 +116,7 @@ term in `certificates/` should be a cache hit, not a full recomputation.
 - Anchors cross-checked by two independent `primecount` algorithms — exact agreement
 - a(21)'s defining dip independently reproduced via direct Miller–Rabin testing, bypassing the sieve entirely
 - a(18)/a(19) independently recomputed on a second machine, matched exactly
-- Growth-ratio ($9.47\times \to 9.54\times$ per decade) and analytic $\li(Q)-\li(Q/2)$ agreement, both clean
+- Growth-ratio (9.47× → 9.54× per decade) and analytic li(Q) − li(Q/2) agreement, both clean
 - Dusart/Johnston bound formulas checked against the original papers, not just transcribed on trust
 
 See the paper's Verification section for the full list.
