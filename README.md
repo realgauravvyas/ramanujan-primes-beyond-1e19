@@ -83,7 +83,6 @@ $2^{64}$ limit of general-purpose sieve libraries. Instead:
 | `certificates/` | Machine-checkable JSON certificates for a(1)–a(23), incl. an independent cross-machine reproduction of a(18)/a(19) |
 | `data/` | `pi_cache.json` (every exact π(x) ever computed), timing tables, independent external π(x) reference |
 | `TIME_COMPLEXITY_ANALYSIS.md` | Empirical scaling: ~3.5–3.7× per decade of Q |
-| `OEIS_SUBMISSION_NOTES.md` | Submission-readiness notes for A181671 |
 
 ---
 
