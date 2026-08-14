@@ -10,8 +10,7 @@
 
 <div align="center">
 
-![Status](https://img.shields.io/badge/a(1)--a(22)-certified-6C63FF?style=flat-square)
-![Status](https://img.shields.io/badge/a(23)-in%20progress-orange?style=flat-square)
+![Status](https://img.shields.io/badge/a(1)--a(23)-certified-6C63FF?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-6C63FF?style=flat-square)
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![C++](https://img.shields.io/badge/-C%2B%2B-00599C?style=flat-square&logo=cplusplus&logoColor=white)
@@ -27,8 +26,7 @@ A Ramanujan prime $R_n$ is the least integer such that $\pi(x) - \pi(x/2) \geq n
 for all $x \geq R_n$ — Ramanujan's own 1919 strengthening of Bertrand's postulate.
 [OEIS A181671](https://oeis.org/A181671) tabulates how many such primes lie below
 each power of ten, but publishes real data only through $10^{17}$. This repo pushes
-that to $10^{22}$ — certified, cross-verified, and reproducible — with $10^{23}$
-in progress.
+that to $10^{23}$ — certified, cross-verified, and reproducible.
 
 ```
 while (curious) {
@@ -49,10 +47,9 @@ while (curious) {
 | 20 | 1,093,039,678,770,734,297 | **new**, cross-algorithm verified |
 | 21 | 10,406,559,368,229,726,028 | **new**, cross-algorithm + Miller–Rabin verified |
 | 22 | 99,306,360,875,818,676,888 | **new**, cross-algorithm verified |
-| 23 | *(Q = 10²³, in progress)* | **new**, computation ongoing |
+| 23 | 949,634,047,203,617,038,366 | **new**, cross-algorithm + Miller–Rabin + external π(x) reference verified |
 
-Full table, methodology, and every verification layer: **[`paper/main.pdf`](paper/main.pdf)**
-(full version) or **[`paper_a22/main.pdf`](paper_a22/main.pdf)** (final, through a(22) only).
+Full table, methodology, and every verification layer: **[`paper/main.pdf`](paper/main.pdf)**.
 
 ---
 
@@ -81,10 +78,9 @@ $2^{64}$ limit of general-purpose sieve libraries. Instead:
 
 | path | contents |
 |---|---|
-| `paper/` | LaTeX source + PDF — full version (a(1)–a(22), a(23) placeholder) |
-| `paper_a22/` | LaTeX source + PDF — final version through a(22) |
+| `paper/` | LaTeX source + PDF — full paper, a(1)–a(23) |
 | `src/` | `ramanujan128.py` (orchestration driver), `sieve128.cpp` (128-bit sieve), build scripts |
-| `certificates/` | Machine-checkable JSON certificates for a(1)–a(22), incl. an independent cross-machine reproduction of a(18)/a(19) |
+| `certificates/` | Machine-checkable JSON certificates for a(1)–a(23), incl. an independent cross-machine reproduction of a(18)/a(19) |
 | `data/` | `pi_cache.json` (every exact π(x) ever computed), timing tables, independent external π(x) reference |
 | `TIME_COMPLEXITY_ANALYSIS.md` | Empirical scaling: ~3.5–3.7× per decade of Q |
 | `OEIS_SUBMISSION_NOTES.md` | Submission-readiness notes for A181671 |
@@ -114,9 +110,10 @@ term in `certificates/` should be a cache hit, not a full recomputation.
 ### ✅ Verified, not just computed
 
 - Anchors cross-checked by two independent `primecount` algorithms — exact agreement
-- a(21)'s defining dip independently reproduced via direct Miller–Rabin testing, bypassing the sieve entirely
+- a(21)'s and a(23)'s defining dips independently reproduced via direct Miller–Rabin testing, bypassing the sieve entirely
+- a(23)'s primary anchor π(Q) matches an independently published external reference value exactly
 - a(18)/a(19) independently recomputed on a second machine, matched exactly
-- Growth-ratio (9.47× → 9.54× per decade) and analytic li(Q) − li(Q/2) agreement, both clean
+- Growth-ratio (9.47× → 9.56× per decade) and analytic li(Q) − li(Q/2) agreement, both clean
 - Dusart/Johnston bound formulas checked against the original papers, not just transcribed on trust
 
 See the paper's Verification section for the full list.

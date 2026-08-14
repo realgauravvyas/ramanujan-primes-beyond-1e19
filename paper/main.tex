@@ -43,8 +43,8 @@ the ordinary prime-counting function. The count of Ramanujan primes below
 $10^k$, tabulated as OEIS sequence A181671, has published values only
 through $k=17$; two further terms ($k=18,19$) exist as unpublished prior
 computations. We present a certified extension of this sequence to
-$k=20,21,22$, and (in progress at time of writing) $k=23$, computed on
-consumer hardware with no institutional resources. The method combines
+$k=20,21,22,23$, computed on consumer hardware with no institutional
+resources. The method combines
 a bracketing lemma that reduces the certification of $f(x) = \pcount(x) -
 \pcount(x/2)$ on an entire interval to exact evaluations of $\pcount$ at
 finitely many endpoints, a custom 128-bit segmented sieve for the region
@@ -95,9 +95,7 @@ this approach becomes infeasible well before $Q = 10^{20}$: at that scale
 the certification window alone spans on the order of $10^{12}$
 integers, entirely above the $2^{64}$ boundary.
 
-This paper reports a certified extension of $a(k)$ to $k=20,21,22$, with
-$k=23$ in progress at the time of writing (a placeholder is left in
-Table~\ref{tab:results} pending completion; see Section~\ref{sec:a23}).
+This paper reports a certified extension of $a(k)$ to $k=20,21,22,23$.
 Every term is accompanied by a machine-checkable certificate and passes
 multiple layers of independent verification described in
 Section~\ref{sec:verification}. The entire computation was carried out
@@ -271,7 +269,7 @@ some throughput for reliability on hardware without dedicated headroom.
 
 Terms $a(1)$ through $a(22)$ were computed on a laptop-class machine (13th
 Gen Intel Core i5-13420H, 8 cores/12 threads, 16\,GB RAM, NVIDIA GeForce
-RTX 4050 Laptop GPU, not used for this computation). Term $a(23)$ is being
+RTX 4050 Laptop GPU, not used for this computation). Term $a(23)$ was
 computed on a separate desktop machine (12th Gen Intel Core i5-12400F, 6
 cores/12 threads, 32\,GB RAM, NVIDIA GeForce RTX 3060, likewise not used
 for this computation), after the laptop's available RAM proved
@@ -314,8 +312,11 @@ $a(k)$ & 12{,}153{,}997{,}721{,}169{,}239 & 115{,}097{,}677{,}588{,}071{,}134 \\
 are clean, single-pass, cache-bypassed measurements; $k=19,20$ are
 genuine first-time measurements with no interruption. See
 Section~\ref{sec:performance} for why some originally recorded times
-were superseded by fresh recomputation. Status codes are defined below
-the table.}
+were superseded by fresh recomputation. $k=23$'s recorded time reflects
+only its final continuous run segment, not the full multi-day effort
+across earlier interruptions (same caveat as originally applied to
+$k=21,22$; see Section~\ref{sec:performance}). Status codes are defined
+below the table.}
 \label{tab:results} \\
 \toprule
 $k$ & $a(k)$ & time & chk. & status \\
@@ -347,7 +348,7 @@ $k$ & $a(k)$ & time & chk. & status \\
 20 & 1{,}093{,}039{,}678{,}770{,}734{,}297 & 63\,m\,59\,s & 16 & C \\
 21 & 10{,}406{,}559{,}368{,}229{,}726{,}028 & 4\,h\,31\,m\,47\,s & 18 & D \\
 22 & 99{,}306{,}360{,}875{,}818{,}676{,}888 & 14\,h\,43\,m\,22\,s & 12 & C \\
-23 & \emph{[in progress --- placeholder]} & --- & 31 & E \\
+23 & 949{,}634{,}047{,}203{,}617{,}038{,}366 & 26\,h\,38\,m\,31\,s & 14 & F \\
 \bottomrule
 \end{longtable}
 }
@@ -359,61 +360,62 @@ $k$ & $a(k)$ & time & chk. & status \\
 \textbf{B} = prior self-computed, unpublished; cross-machine reproduced in this work (Table~\ref{tab:crossmachine}).
 \textbf{C} = new result; both anchors cross-algorithm verified (Gourdon vs.\ Deleglise--Rivat).
 \textbf{D} = new result; cross-algorithm verified \emph{and} independently reproduced via direct Miller--Rabin walk testing (Section~\ref{sec:verification}).
-\textbf{E} = new result; computation ongoing at time of writing.
+\textbf{F} = new result; cross-algorithm verified, independently reproduced via direct Miller--Rabin walk testing, \emph{and} its primary anchor $\pcount(Q)$ matches an independently published external reference value (Section~\ref{sec:verification}) --- the most thoroughly verified term in this table.
 \normalsize
 
-\subsection{Status of $a(23)$}
+\subsection{$a(23)$}
 \label{sec:a23}
 
-At the time of writing, $Q=10^{23}$ is being certified on the desktop
-machine described in Section~\ref{sec:hardware}. All 31 grid-bracketing
-checkpoints required for the safety net have been computed; the two
-main anchors $\pcount(Q)$ and $\pcount(Q/2)$, each requiring independent
-cross-verification via both the Gourdon and Deleglise--Rivat algorithms,
-are in progress. \textbf{This placeholder will be replaced with the
-certified value, its certificate, and full verification results once
-the computation completes.} An independently published reference value
-for $\pcount(10^{23})$, from the Wikipedia prime-counting-function
-table~\cite{wikipedia-picount}, is available for cross-checking the
-primary anchor once it lands: $\pcount(10^{23}) =
-1{,}925{,}320{,}391{,}606{,}803{,}968{,}923$.
+$Q=10^{23}$ was certified on the desktop machine described in
+Section~\ref{sec:hardware}. Its defining minimum occurs at offset $42$
+above $Q$ (a dip of exactly $1$ below $f(Q)$) --- the second term in
+this work, after $a(21)$, whose minimum is not simply $\pcount(Q) -
+\pcount(Q/2)$. An independently published reference value for
+$\pcount(10^{23})$, from the Wikipedia prime-counting-function
+table~\cite{wikipedia-picount}, matches the certified primary anchor
+exactly: $\pcount(10^{23}) = 1{,}925{,}320{,}391{,}606{,}803{,}968{,}923$.
+The largest Ramanujan prime $\leq 10^{23}$,
+$99{,}999{,}999{,}999{,}999{,}999{,}999{,}947$, was independently
+confirmed prime via deterministic Miller--Rabin testing.
 
 \section{Verification}
 \label{sec:verification}
 
-Every new term reported here (\(k=18\)--\(22\); $k=23$ pending) passes
-the following independent checks, none of which are internal
-self-consistency checks against the pipeline's own prior output:
+Every new term reported here ($k=18$--$23$) passes the following
+independent checks, none of which are internal self-consistency checks
+against the pipeline's own prior output:
 
 \begin{enumerate}
   \item \textbf{Cross-algorithm anchor verification.} $\pcount(Q)$ and
-  $\pcount(Q/2)$ for $k=20,21,22$ (and, redundantly, for the
+  $\pcount(Q/2)$ for $k=20,21,22,23$ (and, redundantly, for the
   cross-machine reproduction of $k=18,19$) were each computed by two
   independently implemented algorithms within \texttt{primecount}
   (Gourdon and Deleglise--Rivat); all agreed exactly.
   \item \textbf{Independent external reference.} The Wikipedia
   prime-counting-function table~\cite{wikipedia-picount}, an
   independent source predating and unrelated to this project, lists
-  $\pcount(10^{19})$ through $\pcount(10^{22})$; all four match this
+  $\pcount(10^{19})$ through $\pcount(10^{23})$; all five match this
   work's computed values digit-for-digit.
   \item \textbf{Miller--Rabin walk reproduction.} $a(21)$'s defining
   minimum occurs at an offset of 58 above $Q=10^{21}$, a dip of 3 below
-  $f(Q)$. This was reproduced independently of \texttt{sieve128} by
-  direct primality testing (via \texttt{sympy}) of every integer in
-  $(Q, Q+58]$ and $(Q/2, (Q+58)/2]$: 0 primes were found in the former
-  range and exactly 3 in the latter, confirming the dip via entirely
-  different machinery. $a(20)$ and $a(22)$ have their minimum at offset
-  0 (i.e.\ $a(k) = \pcount(Q)-\pcount(Q/2)$ exactly), so no walk
-  verification is applicable to them.
-  \item \textbf{Analytic agreement.} For $k=20,21,22$,
+  $f(Q)$; $a(23)$'s occurs at an offset of 42 above $Q=10^{23}$, a dip of
+  exactly 1. Both were reproduced independently of \texttt{sieve128} by
+  direct primality testing (via \texttt{sympy}) of every integer in the
+  relevant ranges: for $a(21)$, 0 primes above and exactly 3 below; for
+  $a(23)$, 0 primes above and exactly 1 below --- confirming both dips
+  via entirely different machinery. $a(20)$ and $a(22)$ have their
+  minimum at offset 0 (i.e.\ $a(k) = \pcount(Q)-\pcount(Q/2)$ exactly),
+  so no walk verification is applicable to them.
+  \item \textbf{Analytic agreement.} For $k=20,21,22,23$,
   $\li(Q)-\li(Q/2)$ agrees with the certified $f(Q)$ to within
-  $6\times10^{-7}$ relative difference in every case.
+  $6\times10^{-7}$ relative difference in every case ($k=23$ agrees to
+  within $5\times10^{-10}$ relative difference specifically).
   \item \textbf{Growth-ratio consistency.} $a(k)/a(k-1)$ for
-  $k=19,\dots,22$ is $9.4699, 9.4966, 9.5208, 9.5427$ respectively ---
-  a smooth, monotonically increasing sequence consistent with the
-  expected $\sim\!9.5\times$ per-decade growth from prime density
-  arguments, with no discontinuity at the transition into the
-  cross-verified regime.
+  $k=19,\dots,23$ is $9.4699, 9.4966, 9.5208, 9.5427, 9.5627$
+  respectively --- a smooth, monotonically increasing sequence
+  consistent with the expected $\sim\!9.5\times$ per-decade growth from
+  prime density arguments, with no discontinuity at the transition into
+  the cross-verified regime.
   \item \textbf{Analytic tail-bound formulas checked against source.}
   The Johnston (2022) and Dusart (2010) bounds as implemented were
   compared directly against the published statements in
@@ -492,8 +494,8 @@ improvements to \texttt{primecount}'s own memory footprint.
 \section{Conclusion}
 
 We have presented a certified, multiply-verified extension of OEIS
-A181671 to $k=20,21,22$ (with $k=23$ in progress), computed entirely on
-consumer-grade personal hardware. The approach combines an elementary
+A181671 to $k=20,21,22,23$, computed entirely on consumer-grade personal
+hardware. The approach combines an elementary
 bracketing lemma with published, unconditional analytic tail bounds to
 avoid sieving computationally infeasible ranges, backed by a
 purpose-built 128-bit segmented sieve for the region that does require
