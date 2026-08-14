@@ -51,6 +51,21 @@ A181671 = {9: 24491666, 10: 220098288, 11: 1998400235, 12: 18299775876,
            16: 136860923837558, 17: 1287462389890262,
            18: 12153997721169239, 19: 115097677588071134}
 
+def parse_exact_int(s):
+    """Parse '1e23', '100000000000000000000000', '1.5e9' etc. EXACTLY.
+
+    int(float(s)) silently corrupts large scientific notation: float('1e23')
+    is 99999999999999991611392, not 10^23 (1e23 is the first power of ten
+    with no exact float64 representation). Decimal parses the literal
+    exactly at any size.
+    """
+    from decimal import Decimal
+    v = Decimal(s.replace("_", ""))
+    iv = int(v)
+    if iv != v:
+        raise ValueError(f"{s!r} is not an integer")
+    return iv
+
 # --------------------------------------------------------------- pi(x), cached
 _cache = {}
 _cache_lock = threading.Lock()          # prewarming writes from several threads
@@ -357,7 +372,14 @@ def certified_count(Q, D=10**9, S=10**8, growth=1.7, threads=None,
     if verbose:
         print("  step 3 of 3 -- extending the safety net out to the analytic tail")
     grid = 0
-    while int(floor(G(y))) < m:
+    JLIM = 1101 * 10**23                  # 1.101e26, exact: G()'s validity limit
+    while True:
+        if y > JLIM:
+            raise RuntimeError(
+                "grid walked past the Johnston bound's validity limit "
+                "(1.101e26); this Q is beyond the method's ceiling")
+        if int(floor(G(y))) >= m:
+            break
         step = int((y - Q) * growth)
         nxt = Q + step
         # bracketing lemma: min over [y, nxt] >= f(y) - (pi(nxt//2) - pi(y//2))
@@ -369,21 +391,23 @@ def certified_count(Q, D=10**9, S=10**8, growth=1.7, threads=None,
             bound = f_y - (ph - pi_half[y // 2])
             if bound >= m:
                 break
-            # bound too weak: refine. NOTE this makes the checkpoint land
-            # somewhere prewarm()/checkpoint_targets() did NOT predict (they
-            # only model the non-refined path) -- any prewarmed value for the
-            # original nxt is simply wasted, not wrong; correctness is
-            # unaffected since pi() below computes whatever is actually
-            # needed, cache hit or not. Flagged because it's never happened
-            # in a(20)/a(21) and is worth noticing if it starts happening.
+            # bound too weak: refine by halving the increment BEYOND y (not
+            # the offset from Q -- halving `step` itself would move nxt to
+            # 0.85*(y-Q) < y, i.e. BACKWARD, and stall immediately). NOTE
+            # refinement makes the checkpoint land somewhere prewarm()/
+            # checkpoint_targets() did NOT predict (they only model the
+            # non-refined path) -- any prewarmed value for the original nxt
+            # is simply wasted, not wrong; correctness is unaffected since
+            # pi() below computes whatever is actually needed, cache hit or
+            # not. Never triggered for a(1)-a(23).
+            inc = (nxt - y) // 2
+            if inc < 10**6:
+                raise RuntimeError("grid refinement stalled; raise D")
             if verbose:
                 print(f"\n    [refine] bound {bound:,} < min {m:,} at Q+{nxt-Q:.3e}; "
-                      f"halving step (prewarm prediction no longer applies here)",
+                      f"halving increment (prewarm prediction no longer applies here)",
                       flush=True)
-            step //= 2
-            nxt = Q + step
-            if nxt - y < 10**6:
-                raise RuntimeError("grid refinement stalled; raise D")
+            nxt = y + inc
         pn = pi(nxt, primecount, threads, verbose, label=f"checkpoint {grid + 1}")
         f_n = pn - pi_half[nxt // 2]
         if f_n < m:                       # cannot happen if bound held, but check
@@ -474,7 +498,7 @@ def main():
                     help="disable parallel checkpoint prewarming")
     a = ap.parse_args()
     _load()
-    D, S = int(float(a.D)), int(float(a.S))
+    D, S = parse_exact_int(a.D), parse_exact_int(a.S)
 
     if a.mode == "validate":
         terms = list(range(9, a.upto + 1))
@@ -528,7 +552,7 @@ def main():
             k += 1
         return 0
 
-    Q = int(float(a.Q)) if "e" in a.Q.lower() else int(a.Q)
+    Q = parse_exact_int(a.Q)
     print(f"Computing a NEW, previously unknown term at Q={a.Q} ...")
     m, info = certified_count(Q, D=D, S=S, growth=a.growth, threads=a.threads,
                               primecount=a.primecount, term_label=f"a(new) at Q={a.Q}",

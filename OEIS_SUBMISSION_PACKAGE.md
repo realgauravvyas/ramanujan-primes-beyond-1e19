@@ -45,22 +45,27 @@ n, a(n) for n=1..23`).
 
 ## Step 5: Suggested COMMENT (paste into the Comments section)
 
+Keep the comment purely mathematical — OEIS convention puts URLs in the
+LINKS section (Step 5b), not in comments; editors move them otherwise.
+
 ```
-a(18) and a(19) were computed via a bracketing-lemma method using exact
-pi(x) values from the primecount library, cross-verified across two
-independently implemented algorithms (Gourdon and Deleglise-Rivat) and
-reproduced independently on a second machine. a(20)-a(23) are certified via
-the same method plus a custom 128-bit segmented sieve for the region
-immediately above each Q (since general sieve libraries are limited to
-2^64), backed by the explicit analytic tail bounds of Dusart (2010,
-arXiv:1002.0442) and Johnston (2022, arXiv:2109.02249). a(21)'s and
-a(23)'s defining minima were additionally reproduced via direct
-Miller-Rabin primality testing, independent of the sieve, and a(23)'s
-primary anchor pi(10^23) matches an independently published external
-reference value (Wikipedia's prime-counting-function table) exactly. Full
-methodology, source code, JSON certificates for every term, and the
-complete verification record:
-https://github.com/realgauravvyas/ramanujan-primes-beyond-1e19
+a(18)-a(23) were computed by a bracketing method: exact pi(x) values (from
+the primecount library, each anchor cross-verified with two independently
+implemented algorithms, Gourdon and Deleglise-Rivat) at O(log) grid
+points, an exact 128-bit segmented sieve of the region immediately above
+each 10^n, and the explicit analytic tail bounds of Dusart (2010) and
+Johnston (2022) beyond the last grid point. The defining minima of a(21)
+(at 10^21 + 58) and a(23) (at 10^23 + 42) were additionally reproduced by
+direct Miller-Rabin testing, independent of the sieve.
+```
+
+## Step 5b: Suggested LINKS entries (added via the Links section)
+
+The b-file link is auto-generated when you upload the file. Additionally
+add:
+
+```
+Gaurav Vyas, <a href="https://github.com/realgauravvyas/ramanujan-primes-beyond-1e19">Certified computation of a(18)-a(23): paper, source code, and machine-checkable certificates</a>
 ```
 
 ## Step 6: Suggested EXTENSIONS line
