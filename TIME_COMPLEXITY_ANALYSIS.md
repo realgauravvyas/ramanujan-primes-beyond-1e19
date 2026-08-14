@@ -1,9 +1,27 @@
-# Time complexity pattern — a(1) through a(22)
+# Time complexity pattern — a(1) through a(22), plus a note on a(23)
 
 Analysis written 2026-08-12, based on the clean, single-pass timings in
 `published_results.csv` (a(1)-a(18) freshly recomputed bypassing cache;
 a(19)-a(20) genuine first-time measurements; a(21)-a(22) freshly
 recomputed after the originals were contaminated by interruptions).
+
+**a(23) (computed 2026-08-14) is deliberately excluded from every fit
+below, and its recorded time must not be used for any complexity
+comparison.** Its 95911s (26h38m) figure suffers the exact same
+contamination the a(21)/a(22) originals did: it reflects only the final
+continuous run segment of a computation spread across multiple
+interrupted sessions (RAM-pressure restarts, a concurrent unrelated
+workload) whose earlier attempts had already cached several checkpoints
+and partial anchors. Unlike a(21)/a(22), a(23) has **not** been
+re-verified with a clean, cache-bypassed, single-pass run, so there is
+currently no reliable a(23) timing at all — only a lower bound (the true
+cost is *at least* 95911s, likely well above it). If the pattern below
+held exactly, a(22)'s 53002.1s would predict roughly 51.5-54.5 hours for
+a clean a(23) run (53002.1 x 3.5 to x3.7); the contaminated 26.6h figure
+being far below that range is consistent with under-counting, not
+evidence the pattern broke. Nobody should treat this as a real
+data point until a fresh recompute is done — see the end of this file
+for what that would take.
 
 ## Three regimes
 
@@ -84,3 +102,13 @@ particular mixes a real Q-scaling increase with this methodology change,
 so it should not be read as pure algorithmic complexity growth. The
 n=13-19 and n=20-22 regressions above are each internally consistent,
 which is why they're reported separately rather than as one combined fit.
+
+## What it would take to get a real a(23) data point
+
+Same fix already applied to a(21)/a(22): a fresh run with `pi_cache.json`
+bypassed entirely, run to completion with nothing else competing for
+RAM/CPU on the machine, timed start-to-finish in one continuous session.
+Based on the ~51.5-54.5h prediction above, budget roughly 2-3 days of
+dedicated compute. Until that exists, treat n=23 as unmeasured, not as
+"~26.6h" -- the number in `published_results.csv` is there for the
+record, not for use.

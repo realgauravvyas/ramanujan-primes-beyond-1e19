@@ -21,3 +21,4 @@ n,a_n,seconds,time_human,checkpoints,verification_status
 20,1093039678770734297,3839,63m59s,16,NEW - cross-algorithm (Gourdon+Deleglise-Rivat) verified
 21,10406559368229726028,16307.3,4h31m47s,18,NEW - cross-algorithm + independent Miller-Rabin walk verification; clean single-pass fresh recompute
 22,99306360875818676888,53002.1,14h43m22s,12,NEW - cross-algorithm verified; clean single-pass fresh recompute
+23,949634047203617038366,95911,26h38m31s (UNRELIABLE - see verification_status),14,NEW - cross-algorithm + independent Miller-Rabin walk + external pi(x) reference verified; TIME NOT CLEAN - this run resumed from checkpoints cached during earlier interrupted attempts and ran concurrently with an unrelated workload, so 95911s understates the true from-scratch cost. Unlike a(21)/a(22), a(23) has NOT been re-verified with a clean cache-bypassed single-pass run. Do not use this timing for any complexity comparison.

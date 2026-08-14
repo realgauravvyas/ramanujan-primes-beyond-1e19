@@ -443,7 +443,7 @@ $k$ & $a(k)$ & time & chk. & status \\
 20 & 1{,}093{,}039{,}678{,}770{,}734{,}297 & 63\,m\,59\,s & 16 & C \\
 21 & 10{,}406{,}559{,}368{,}229{,}726{,}028 & 4\,h\,31\,m\,47\,s & 18 & D \\
 22 & 99{,}306{,}360{,}875{,}818{,}676{,}888 & 14\,h\,43\,m\,22\,s & 12 & C \\
-23 & 949{,}634{,}047{,}203{,}617{,}038{,}366 & 26\,h\,38\,m\,31\,s & 14 & F \\
+23 & 949{,}634{,}047{,}203{,}617{,}038{,}366 & 26\,h\,38\,m\,31\,s\rlap{$^{\dagger}$} & 14 & F \\
 \bottomrule
 \end{longtable}
 }
@@ -455,7 +455,15 @@ $k$ & $a(k)$ & time & chk. & status \\
 \textbf{B} = prior self-computed, unpublished; cross-machine reproduced in this work (Table~\ref{tab:crossmachine}).
 \textbf{C} = new result; both anchors cross-algorithm verified (Gourdon vs.\ Deleglise--Rivat).
 \textbf{D} = new result; cross-algorithm verified \emph{and} independently reproduced via direct Miller--Rabin walk testing (Section~\ref{sec:verification}).
-\textbf{F} = new result; cross-algorithm verified, independently reproduced via direct Miller--Rabin walk testing, \emph{and} its primary anchor $\pcount(Q)$ matches an independently published external reference value (Section~\ref{sec:verification}) --- the most thoroughly verified term in this table.
+\textbf{F} = new result; cross-algorithm verified, independently reproduced via direct Miller--Rabin walk testing, \emph{and} its primary anchor $\pcount(Q)$ matches an independently published external reference value (Section~\ref{sec:verification}) --- the most thoroughly verified term in this table.\\
+$^{\dagger}$ Not a clean measurement: this run resumed from checkpoints
+cached during earlier interrupted attempts and ran concurrently with an
+unrelated workload on the same machine (Section~\ref{sec:hardware}), so
+26\,h\,38\,m understates the true from-scratch cost. Unlike $a(21)$ and
+$a(22)$, $a(23)$ has \emph{not} been re-verified with a clean,
+cache-bypassed, single-pass run; do not use this figure in any
+time-complexity comparison (Section~\ref{sec:performance} already
+excludes it for this reason).
 \normalsize
 
 \subsection{$a(23)$}
@@ -471,7 +479,11 @@ table~\cite{wikipedia-picount}, matches the certified primary anchor
 exactly: $\pcount(10^{23}) = 1{,}925{,}320{,}391{,}606{,}803{,}968{,}923$.
 The largest Ramanujan prime $\leq 10^{23}$,
 $99{,}999{,}999{,}999{,}999{,}999{,}999{,}947$, was independently
-confirmed prime via deterministic Miller--Rabin testing.
+confirmed prime via deterministic Miller--Rabin testing. The value
+$a(23)$ itself is certified with the same rigor as every other term in
+this table; only its \emph{recorded wall-clock time} is unreliable
+(Table~\ref{tab:results}, note $\dagger$) and excluded from the
+performance analysis in Section~\ref{sec:performance}.
 
 \section{Verification}
 \label{sec:verification}
